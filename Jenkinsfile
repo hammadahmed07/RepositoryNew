@@ -1,48 +1,30 @@
-pipeline {
+pipeline
+ {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the Git repository
-               https://github.com/hammadahmed07/RepositoryNew.git
-            }
-        }
-
         stage('Build') {
             steps {
-                // You can include build commands here if necessary
-                // For example: sh 'mvn clean install'
-              echo 'Build App'
+                echo 'Build App'
             }
         }
-
-        stage(' Test App') {
+	stage('Test') {
             steps {
-                // Run your test cases
-                // For example: sh 'mvn test'
-               echo 'Test App'
+                echo 'Test App'
             }
         }
-       stage('Deploy App') {
+   	stage('Deply') {
             steps {
-                // Run your test cases
-                // For example: sh 'mvn test'
-               echo 'Deploy App'
+                echo 'Deploy App'
             }
         }
+   
     }
-
-    post {
-        always {
-            // Cleanup steps, if any
-        }
-        success {
-            // Steps to execute if the pipeline is successful
-        }
-        failure {
-            // Steps to execute if the pipeline fails
-        }
-    }
+post {
+	always
+	{
+		emailext body: 'Summary' , subject: 'Pipeline Status', to: 'hamyahmed007@gmail.com'
+	}
 }
 
+}
