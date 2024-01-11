@@ -1,30 +1,24 @@
-pipeline
- {
+pipeline {
     agent any
-
+ 
     stages {
-        stage('Build') {
+        stage('BuildTest') {
             steps {
-                echo 'Build App'
+            git 'https://github.com/shivamrnc/Hello.git'
+                echo 'Building..'
             }
         }
-	stage('Test') {
+        stage('Test') {
             steps {
-                echo 'Test App'
+            bat 'mvn compile'
+                echo 'Testing..'
             }
         }
-   	stage('Deply') {
+        stage('Deploy') {
             steps {
-                echo 'Deploy App'
+            bat 'mvn test -Dbrowser=localchrome'
+                echo 'Deploying....'
             }
         }
-   
     }
-post {
-	always
-	{
-		emailext body: 'Summary' , subject: 'Pipeline Status', to: 'hamyahmed007@gmail.com'
-	}
-}
-
 }
